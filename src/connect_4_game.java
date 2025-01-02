@@ -1,14 +1,34 @@
-public class connect_4_game {
-    private final board game_board;
-    private final player[] players;
-    private final player current_player;
+import java.util.Scanner;
 
-    public connect_4_game(){
+/**
+ * The “Authenticator” class implements the “Authentication” interface that is responsible for handling user registration, login and password management.
+ */
+public class connect_4_game {
+    /**
+     * the game board
+     */
+    private final board game_board;
+
+    /**
+     * this is the current player
+     */
+    private final player[] players;
+    private  player current_player;
+    private final int gamemode;
+
+    public connect_4_game(int gamemode){
+
         game_board = new board();
         players = new player[2];
+        this.gamemode=gamemode;
 
-        players[0] = new player("Player 1", 1);
-        players[1] = new player("Player 2", 2);
+        if(gamemode==0){
+            players[0] = new player("Player 1", 1);
+            players[1] = new PC();
+        }else {
+            players[0] = new player("Player 1", 1);
+            players[1] = new player("Player 2", 2);
+        }
 
         current_player= new player(players[0].getName(),players[0].getID());
     }
@@ -77,25 +97,34 @@ public class connect_4_game {
     }
 
     public void switch_current_player(){
-        if (current_player.getID()==players[0].getID()){
-            current_player.setID(players[1].getID());
-            current_player.setName(players[1].getName());
-        } else if (current_player.getID()==players[1].getID()) {
-            current_player.setID(players[0].getID());
-            current_player.setName(players[0].getName());
+        if (this.gamemode==0){
+            if (current_player.getID()==players[0].getID()){
+                current_player= new PC();
+            } else if (current_player.getID()==players[1].getID()) {
+                current_player= new player(players[0].getName(),players[0].getID());
+            }
+        }else {
+            if (current_player.getID()==players[0].getID()){
+                current_player.setID(players[1].getID());
+                current_player.setName(players[1].getName());
+            } else if (current_player.getID()==players[1].getID()) {
+                current_player.setID(players[0].getID());
+                current_player.setName(players[0].getName());
+            }
         }
     }
 
     public void start_game(){
         boolean game_won=false, game_drawn=false;
+        game_board.display_the_game();
 
         while (!game_won && !game_drawn){
-            game_board.display_the_game();
             current_player.make_a_move(game_board);
+            game_board.display_the_game();
             game_won=check_win();
             game_drawn=check_draw();
             if (game_won){
-                System.out.println("player"+current_player.getName()+"won!");
+                System.out.println("player "+current_player.getName()+" won!");
             } else if (game_drawn) {
                 System.out.println("it's a draw!");
             }else {
@@ -103,11 +132,13 @@ public class connect_4_game {
             }
         }
 
-        System.out.println("thank you for playing Ramy's X O game!");
+        System.out.println("thank you for playing Ramy's connect 4 game!");
     }
 
     public static void main(String[] args) {
-    connect_4_game match=new connect_4_game();
+        Scanner scanner=new Scanner(System.in);
+        System.out.println("for single player enter 0, for multiplayer enter 1");
+    connect_4_game match=new connect_4_game(scanner.nextInt());
     match.start_game();
     }
 }

@@ -1,7 +1,12 @@
 import java.util.Scanner;
 
+
+
 public class player {
+
     private String name;
+
+
     private int ID;
 
     public player(String name, int ID) {

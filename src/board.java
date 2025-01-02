@@ -40,6 +40,12 @@ public class board {
             }
             System.out.println();
         }
+        System.out.println();
+        for (int j = 0; j < 7; j++) {
+            System.out.print(j);
+            System.out.print('\t');
+        }
+        System.out.println("\n \n");
     }
 
 
