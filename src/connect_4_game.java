@@ -73,7 +73,7 @@ public class connect_4_game {
                 if(!win && i>2 && j<4){
                     if (game_board.grid[i][j] != 0 &&
                             game_board.grid[i][j] == game_board.grid[i - 1][j + 1] &&
-                            game_board.grid[i][j] == game_board.grid[i - 3][j + 2] &&
+                            game_board.grid[i][j] == game_board.grid[i - 2][j + 2] &&
                             game_board.grid[i][j] == game_board.grid[i - 3][j + 3]) {
                         win = true;
                     }
